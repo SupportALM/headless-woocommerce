@@ -1,3 +1,4 @@
+import React from 'react';
 import { BlockComponentProps, ParsedBlock } from '@src/components/blocks';
 import { Content } from '@src/components/blocks/content';
 import { MiniCartContainer } from '@src/components/blocks/woocommerce/mini-cart/mini-cart-container';
@@ -86,9 +87,9 @@ export const Group = ({ block }: BlockComponentProps) => {
     return null;
   }
 
-  const TagName = block.attrs?.tagName
-    ? (block.attrs.tagName as keyof JSX.IntrinsicElements)
-    : ('div' as keyof JSX.IntrinsicElements);
+  // Ensure tagName is a lowercase string, default to 'div'
+  const rawTagName = block.attrs?.tagName;
+  const tagName = typeof rawTagName === 'string' ? rawTagName.toLowerCase() : 'div';
 
   const blockName = getBlockName(block);
   const GroupBlock = placeHolderBlocks[blockName as keyof typeof placeHolderBlocks];
@@ -96,13 +97,13 @@ export const Group = ({ block }: BlockComponentProps) => {
     return <GroupBlock block={block as ParsedBlock} />;
   }
 
-  return (
-    <TagName className={getGroupClasses(block)}>
-      <Content
-        type={type}
-        content={block.innerBlocks}
-        globalData={data}
-      />
-    </TagName>
+  return React.createElement(
+    tagName,
+    { className: getGroupClasses(block) },
+    <Content
+      type={type}
+      content={block.innerBlocks}
+      globalData={data}
+    />
   );
 };
