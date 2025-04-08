@@ -144,7 +144,7 @@ export default async function execute() {
     const themeColors = mergeColors(defaultColors, mergedThemeColors as ColorItem[]);
 
     const themeObject = {
-      colorVars: themeColors.reduce((acc, { color, name }) => {
+      colorVars: themeColors.filter(({ color }) => !color.startsWith('var(')).reduce((acc, { color, name }) => {
         acc[`--${slugify(name)}`] = color;
         return acc;
       }, {} as Record<string, string>),
