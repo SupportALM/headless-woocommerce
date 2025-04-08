@@ -51,15 +51,19 @@ export const Accordion: React.FC<Props> = ({
                 </span>
                 <span className="accordion-button">
                   {open ? (
-                    <FiChevronUp
-                      width="8"
-                      height="8"
-                    />
+                    <>
+                      <FiChevronUp
+                        width="8"
+                        height="8"
+                      />
+                    </>
                   ) : (
-                    <FiChevronDown
-                      width="8"
-                      height="8"
-                    />
+                    <>
+                      <FiChevronDown
+                        width="8"
+                        height="8"
+                      />
+                    </>
                   )}
                 </span>
               </Disclosure.Button>
