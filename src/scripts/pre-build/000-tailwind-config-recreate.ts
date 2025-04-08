@@ -13,27 +13,27 @@ const gridItemWidthsClasses = gridItemWidths
 
 const safeListPattern = /(mb|mt|ml|mr)-\d*/;
 
-const colorVars = Object.entries(theme.colorVars)
-  .map(([key, value]) => `${key}: ${hexToHslValue(value)};`)
+const colorVars = Object.entries((theme as any).colorVars)
+  .map(([key, value]) => `${key}: ${hexToHslValue(value as string)};`)
   .join('\n');
 
-const themeColors = Object.entries(theme.colorClasses)
+const themeColors = Object.entries((theme as any).colorClasses)
   .map(([key, value]) => `'${key}': 'hsl(${value})'`)
   .join(',\n');
 
-const fontFamilies = Object.entries(theme.fontFamilies);
+const fontFamilies = Object.entries((theme as any).fontFamilies);
 const modifiedFontFamilies: [string, string][] = [];
 
 if (fontFamilies.length >= 1) {
-  modifiedFontFamilies.push(['primary', fontFamilies[0][1]]);
+  modifiedFontFamilies.push(['primary', fontFamilies[0][1] as string]);
 }
 
 if (fontFamilies.length >= 2) {
-  modifiedFontFamilies.push(['secondary', fontFamilies[1][1]]);
+  modifiedFontFamilies.push(['secondary', fontFamilies[1][1] as string]);
 }
 
 if (fontFamilies.length >= 3) {
-  modifiedFontFamilies.push(['tertiary', fontFamilies[2][1]]);
+  modifiedFontFamilies.push(['tertiary', fontFamilies[2][1] as string]);
 }
 
 const fontFamilyConfig = modifiedFontFamilies
@@ -59,7 +59,7 @@ const tailwindConfig = `module.exports = {
     container: {
       center: true,
       screens: {
-        '2xl': '${wptheme.layout.contentSize}',
+        '2xl': '${wptheme.layout?.contentSize ?? '1200px'}',
       },
     },
     extend: {
@@ -127,7 +127,7 @@ const themeVariables = `
 @layer base {
   :root {
     ${colorVars}
-    --container-width: ${wptheme.layout.contentSize};
+    --container-width: ${wptheme.layout?.contentSize ?? '1200px'};
   }
 }`;
 
